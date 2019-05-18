@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\UsersRequest;
 
 use App\Http\Requests;
+use App\User;
+use App\Role;
 
 class AdminUsersController extends Controller
 {
@@ -16,7 +19,8 @@ class AdminUsersController extends Controller
     public function index()
     {
         //
-        return view('admin.users.index');
+        $users = User::all();
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -27,7 +31,8 @@ class AdminUsersController extends Controller
     public function create()
     {
         //
-        return view('admin.users.create');
+        $roles = Role::lists('name', 'id')->all();
+        return view('admin.users.create', compact('roles'));
     }
 
     /**
@@ -36,9 +41,22 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(UsersRequest $request)
     {
         //
+        $output = $request->all();
+        $file = $request->file();
+
+        User::create([
+            'name' => htmlspecialchars($output['name']),
+            'email' => htmlspecialchars($output['email']),
+            'role_id' => htmlspecialchars($output['role_id']),
+            'is_active' => htmlspecialchars($output['is_active']),
+            'password' => bcrypt(htmlspecialchars($output['password'])),
+            // 'photo_id' => htmlspecialchars('')
+        ]);
+
+        return redirect('/admin/users');
     }
 
     /**
