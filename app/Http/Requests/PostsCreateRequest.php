@@ -25,10 +25,10 @@ class PostsCreateRequest extends Request
     {
         return [
             //
-            // 'title'         => 'required',
-            // 'category_id'   => 'required',
-            // 'body'          => 'required',
-            // 'photo_id'      => 'required',
+            'title'         => 'required',
+            'category_id'   => 'required',
+            'body'          => 'required',
+            'photo_id'      => 'required',
         ];
     }
 }

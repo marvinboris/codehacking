@@ -1,7 +1,6 @@
 @extends('layouts.admin')
 
 @section('content')
-    <h1>Posts</h1>
     @if (Session::has('deleted_post'))
         <div class="alert alert-danger">{{ session('deleted_post') }}</div>
     @endif
@@ -32,7 +31,7 @@
                     <th scope="row">{{ $post->id }}</th>
                     <td><img src="{{ $post->photo ? $post->photo->path : 'http://placehold.it/400x400' }}" alt="post photo" height="30"></td>
                     <td>{{ $post->user->name }}</td>
-                    <td>{{ $post->category_id }}</td>
+                    <td>{{ $post->category ? $post->category->name : 'No category' }}</td>
                     <td><a href="{{ route('admin.posts.edit', $post->id) }}">{{ $post->title }}</a></td>
                     <td>{{ $post->body }}</td>
                     <td>{{ $post->created_at->diffForHumans() }}</td>
